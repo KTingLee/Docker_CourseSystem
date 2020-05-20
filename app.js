@@ -12,6 +12,7 @@ var adminCoursesCtrl = require("./controllers/admin/adminCoursesCtrl.js")
 var mainCtrl = require("./controllers/mainCtrl.js");
 
 // 連結資料庫 - CourseSystem  (記得先打開數據庫)
+// 注意，這邊資料庫連線的伺服器稱為 mongodb，是由另一個容器產生的，詳情可以看 docker-compose
 mongoose.connect('mongodb://mongodb:27017/CourseSystem', {useNewUrlParser: true});
 
 // 設定 session
