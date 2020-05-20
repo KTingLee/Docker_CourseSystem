@@ -1,0 +1,24 @@
+# 一般開頭都是 version，單純用來描述這份 yml 的資訊
+version : '3'
+
+# 服務器名稱(容器執行後，就是運行服務器，要提供容器執行所需參數)
+services:
+  # 第一個容器的功能是執行網頁，所以命名為 web
+  web:
+    container_name : docker-node-mongo  # 該容器的名稱
+    restart : always  # 當該服務器中斷時，自動重新執行
+    build : .  # 該容器是利用 dockerfile 建立的，而 dockerfile 位於當前資料夾下
+    ports :
+      - '1234:3000'
+    links:  # links 說明該服務器將連線至哪個服務器！對於資料庫的串接相當重要
+      - mongodb
+
+  # 第二個容器是用來執行資料庫，網頁的 app.js 連線至 mongodb:27017，所以命名為 mongodb
+  mongodb:
+    container_name : docker-mongodb  # 該容器的名稱
+    image : mongo  # 該容器是利用鏡像檔建立，而鏡像名稱為 mongo
+    ports :
+      - '27017:27017'
+    volumes:  # 該容器與主機共用的資料夾
+      - ./database:/data/db
+    # command: ["mongod", "--dbpath", "/data/db"]
