@@ -16,9 +16,13 @@ services:
   # 第二個容器是用來執行資料庫，網頁的 app.js 連線至 mongodb:27017，所以命名為 mongodb
   mongodb:
     container_name : docker-mongodb  # 該容器的名稱
+    restart : always  # 當該服務器中斷時，自動重新執行
     image : mongo  # 該容器是利用鏡像檔建立，而鏡像名稱為 mongo
     ports :
       - '27017:27017'
-    volumes:  # 該容器與主機共用的資料夾
-      - ./database:/data/db
     # command: ["mongod", "--dbpath", "/data/db"]
+    volumes:  # 該容器與主機共用的資料夾
+      - database:/data/db
+
+volumes:
+  database:
